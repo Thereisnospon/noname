@@ -1602,6 +1602,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					chooseCharacterFixed:true,
 					chooseCharacter:function(list,player){
 						game.versusVideoName='同姓之争';
+						_status.noReplaceCharacter=true;
 						if(player.side==game.me.side){
 							if(_status.brawl.mylist){
 								return _status.brawl.mylist.randomGets(2);
@@ -1750,6 +1751,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 						}
 					},
 					chooseCharacter:function(){
+						_status.noReplaceCharacter=true;
 						if(game.me==game.zhu){
 							return ['re_caocao'];
 						}
@@ -1822,10 +1824,10 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 						game.identityVideoName='同将模式';
 						var target=(_status.mode=='zhong')?game.zhong:game.zhu;
 						if(get.config('double_character')){
-							target.init(game.me.name,game.me.name2);
+							target.init(game.me.name1,game.me.name2);
 						}
 						else{
-							target.init(game.me.name);
+							target.init(game.me.name1);
 						}
 						target.hp++;
 						target.maxHp++;
@@ -1837,10 +1839,10 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 						}
 						else{
 							if(get.config('double_character')){
-								player.init(game.me.name,game.me.name2);
+								player.init(game.me.name1,game.me.name2);
 							}
 							else{
-								player.init(game.me.name);
+								player.init(game.me.name1);
 							}
 						}
 					},
@@ -1856,7 +1858,10 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 								return list.concat(list2.slice(0,num));
 							}
 						}
-					}
+					},
+					chooseCharacterBefore:function(){
+						if(_status.mode=='purple') _status.mode='normal';
+					},
 				}
 			},
 			jiazuzhizheng:{
@@ -1926,6 +1931,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					submode:'two',
 					chooseCharacterFixed:true,
  				chooseCharacterBefore:function(){
+						_status.noReplaceCharacter=true;
  					game.versusVideoName='家族之争';
  					var map={
  						wei:[],
@@ -3862,6 +3868,8 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 								if(cname=='sha'){
 									pileaddlist.push(['huosha','火杀']);
 									pileaddlist.push(['leisha','雷杀']);
+									pileaddlist.push(['icesha','冰杀']);
+									pileaddlist.push(['kamisha','神杀']);
 								}
 							}
 						}

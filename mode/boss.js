@@ -424,7 +424,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 			var info=[];
 			for(var i=0;i<players.length;i++){
 				info.push({
-					name:players[i].name,
+					name:players[i].name1,
 					identity:players[i].identity,
 					position:players[i].dataset.position
 				});
@@ -495,6 +495,12 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 						equipValue:7.5,
 					},
 				},
+				fullskin:true,
+ 		},
+ 		shenzhixiunvfu:{
+ 			type:'equip',
+ 			subtype:'equip2',
+				modeimage:'boss',
 				fullskin:true,
  		},
  		gubuzifeng:{
@@ -1604,7 +1610,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 						return name;
 					}
 					else{
-						var arr=['shen_caocao','shen_simayi','shen_guanyu','shen_zhugeliang','shen_zhaoyun','shen_zhouyu','shen_lvmeng','shen_lvbu','shen_liubei','shen_luxun','shen_ganning','ol_zhangliao','shen_zhenji','shen_caopi','key_kagari','key_shiki'];
+						var arr=['shen_caocao','shen_simayi','shen_guanyu','shen_zhugeliang','shen_zhaoyun','shen_zhouyu','shen_lvmeng','shen_lvbu','shen_liubei','shen_luxun','shen_ganning','ol_zhangliao','shen_zhenji','shen_caopi','key_kagari','key_shiki','key_hina'];
 						arr.removeArray(list);
 						return arr.randomGet();
 					}
@@ -1653,7 +1659,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 							game.check();
 						});
 						control.backup1=ui.create.div('.buttons');
-						control.backup2=ui.create.buttons(['shen_caocao','shen_simayi','shen_guanyu','shen_zhugeliang','shen_zhaoyun','shen_zhouyu','shen_lvmeng','shen_lvbu','shen_liubei','shen_luxun','shen_ganning','ol_zhangliao','shen_zhenji','shen_caopi','key_kagari','key_shiki'],'character',control.backup1);
+						control.backup2=ui.create.buttons(['shen_caocao','shen_simayi','shen_guanyu','shen_zhugeliang','shen_zhaoyun','shen_zhouyu','shen_lvmeng','shen_lvbu','shen_liubei','shen_luxun','shen_ganning','ol_zhangliao','shen_zhenji','shen_caopi','key_kagari','key_shiki','key_hina'],'character',control.backup1);
 						return control;
 					}
 				},
@@ -1663,7 +1669,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					game.addGlobalSkill('thedayibecomeagod');
 					var list=['lebu','bingliang'];
 					for(var i=0;i<game.players.length;i++){
-						switch(game.players[i].name){
+						switch(game.players[i].name1){
 							case 'shen_guanyu':{
 								game.players[i].equip(game.createCard2('guilongzhanyuedao','spade',5));
 								lib.inpile.add('guilongzhanyuedao');
@@ -1751,6 +1757,11 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 							case 'key_shiki':{
 								game.players[i].equip(game.createCard2('niaobaidaowenha','diamond',13));
 								lib.inpile.add('niaobaidaowenha');
+								break;
+							}
+							case 'key_hina':{
+								game.players[i].equip(game.createCard2('shenzhixiunvfu','spade',13));
+								lib.inpile.add('shenzhixiunvfu');
 								break;
 							}
 						}
@@ -8876,7 +8887,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				enable:'phaseUse',
 				filter:function(event,player){
 					if(player.countCards('h')==0) return false;
-					if(!player.hasSkill('qiangxi')) return true;
+					if(!player.hasSkill('qiangxix')) return true;
 					if(!player.hasSkill('retieji')) return true;
 					if(!player.hasSkill('rexuanfeng')) return true;
 					if(!player.hasSkill('wansha')) return true;
@@ -8891,7 +8902,7 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 				content:function(){
 					'step 0'
 					var list=[];
-					if(!player.hasSkill('qiangxi')) list.push('qiangxi');
+					if(!player.hasSkill('qiangxix')) list.push('qiangxix');
 					if(!player.hasSkill('retieji')) list.push('retieji');
 					if(!player.hasSkill('rexuanfeng')) list.push('rexuanfeng');
 					if(!player.hasSkill('wansha')) list.push('wansha');
@@ -8902,19 +8913,19 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					else{
 						player.chooseControl(list,function(){
 							if(list.contains('rexuanfeng')&&player.countCards('he',{type:'equip'})) return 'rexuanfeng';
-							if(!player.getStat().skill.qiangxi){
-								if(player.hasSkill('qiangxi')&&player.getEquip(1)&&list.contains('rexuanfeng')) return 'rexuanfeng';
-								if(list.contains('wansha')||list.contains('qiangxi')){
+							if(!player.getStat().skill.qiangxix){
+								if(player.hasSkill('qiangxix')&&player.getEquip(1)&&list.contains('rexuanfeng')) return 'rexuanfeng';
+								if(list.contains('wansha')||list.contains('qiangxix')){
 									var players=game.filterPlayer();
 									for(var i=0;i<players.length;i++){
 										if(players[i].hp==1&&get.attitude(player,players[i])<0){
 											if(list.contains('wansha')) return 'wansha';
-											if(list.contains('qiangxi')) return 'qiangxi';
+											if(list.contains('qiangxix')) return 'qiangxix';
 										}
 									}
 								}
 							}
-							if(list.contains('qiangxi')) return 'qiangxi';
+							if(list.contains('qiangxix')) return 'qiangxix';
 							if(list.contains('wansha')) return 'wansha';
 							if(list.contains('rexuanfeng')) return 'rexuanfeng';
 							return 'retieji';
@@ -8928,8 +8939,8 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					order:function(){
 						var player=_status.event.player;
 						if(player.countCards('e',{type:'equip'})) return 10;
-						if(!player.getStat().skill.qiangxi){
-							if(player.hasSkill('qiangxi')&&player.getEquip(1)&&!player.hasSkill('rexuanfeng')) return 10;
+						if(!player.getStat().skill.qiangxix){
+							if(player.hasSkill('qiangxix')&&player.getEquip(1)&&!player.hasSkill('rexuanfeng')) return 10;
 							if(player.hasSkill('wansha')) return 1;
 							var players=game.filterPlayer();
 							for(var i=0;i<players.length;i++){
@@ -8941,9 +8952,9 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 					result:{
 						player:function(player){
 							if(player.countCards('e',{type:'equip'})) return 1;
-							if(!player.getStat().skill.qiangxi){
-								if(player.hasSkill('qiangxi')&&player.getEquip(1)&&!player.hasSkill('rexuanfeng')) return 1;
-								if(!player.hasSkill('wansha')||!player.hasSkill('qiangxi')){
+							if(!player.getStat().skill.qiangxix){
+								if(player.hasSkill('qiangxix')&&player.getEquip(1)&&!player.hasSkill('rexuanfeng')) return 1;
+								if(!player.hasSkill('wansha')||!player.hasSkill('qiangxix')){
 									var players=game.filterPlayer();
 									for(var i=0;i<players.length;i++){
 										if(players[i].hp==1&&get.attitude(player,players[i])<0) return 1;
@@ -9809,6 +9820,8 @@ game.import('mode',function(lib,game,ui,get,ai,_status){
 			niaobaidaowenha_skill:'鸟白岛文蛤',
 			niaobaidaowenha_info:'当你减少1点体力上限后，你可令一名其他角色增加1点体力上限并回复1点体力。',
 			niaobaidaowenha_skill_info:'当你减少1点体力上限后，你可令一名其他角色增加1点体力上限并回复1点体力。',
+			shenzhixiunvfu:'神之修女服',
+			shenzhixiunvfu_info:'没什么实际作用的衣服，仅仅是显得像个神而已。',
 
 			mode_boss_card_config:'挑战卡牌',
 			mode_boss_character_config:'挑战武将',
